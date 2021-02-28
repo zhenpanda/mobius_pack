@@ -4,9 +4,12 @@ import $ from 'jquery';
 import { useEffect } from 'react';
 import './assets/css/app.css';
 import 'react-transitions/dist/animations.css';
+import ReactTooltip from 'react-tooltip';
 
 import cubeIcon from './assets/icons/cube2.png';
-import itemsRef from './assets/ref/items.png';
+// import itemsRef from './assets/ref/items.png';
+import swordItemPic from './assets/ref/item_pic/item_9.png';
+import emptyItemPic from './assets/ref/item_pic/empty.png';
 
 function App() {
 
@@ -29,7 +32,7 @@ function App() {
 
       return(
         <div className="box target-pos circle-1-color pulse" key={x+"-"+y} id={x+"-"+y}>
-          <div className="dotted-box" onClick={() => $("#wow-box-open").click()} >
+          <div className="dotted-box" onClick={() => $("#game-box-open").click()} >
 
           </div>
         </div>
@@ -97,8 +100,34 @@ function App() {
     line.style.height = H + 'px';
   }
   
-  let items = [0,1,2,3,4,5,6,7,8];
-  let wowItems = [0,1,2,3,4,5,6,7,8];
+  // items imgs
+  let items = [
+    {"pic": swordItemPic},
+    1,2,3,4,5,6,7,8
+  ];
+  let gameItems = [
+    {"pic": swordItemPic},
+    1,2,3,4,5,6,7,8
+  ];
+
+  const displayToolTip = () => {
+    return(
+      <ReactTooltip type='light' place="right" effect="float">
+        <div className="item-description-box">
+          <div className="item-title">[ Sword of Fighting ]</div>
+          <div className="item-world">Game build 37415 Retail Version 9.0.2</div>
+          <div className="item-divider" />
+          <span className="item-address">game_token_addr = 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d</span>
+          <div className="item-divider" />
+          <span className="item-address">acc_address = 0xb1690C08E213a35Ed9bAb7B318DE14420FB57d8C</span>
+          <div className="item-divider" />
+          <span className="item-detail">game_asset_Id: 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d</span>
+          <div className="item-divider" />
+          <span className="item-detail-text">Are you a fighter? Then this is the weapon for you. Note that this sword is usable by Priests as it is not a slashing or piercing weapon.</span>
+        </div>
+      </ReactTooltip>
+    )
+  }
 
   // popup box modal 
   const mobiusBox = (items) => (
@@ -108,13 +137,23 @@ function App() {
           <div className="header"> mobius pack</div>
           <div className="mobius-pack-box">
 
-            {/* <img src={itemsRef} alt="" className="items-ref-box" /> */}
             <div className="pack-grid">
               {items.map((i) => {
-                return(
-                  <div className="item-slot" key={"item-slot-"+i}>
-                  </div>
-                )
+                if(i.pic) {
+
+                  return(
+                    <div className="item-slot" key={"item-slot-"+i} data-tip={"item-slot-"+i}>
+                      <img src={i.pic} alt="" className="item-img" />
+                    </div>
+                  )
+
+                }else{
+                  return(
+                    <div className="item-slot" key={"item-slot-"+i}>
+                      <img src={emptyItemPic} alt="" className="item-img" />
+                    </div>
+                  )
+                }
               })}
             </div>
 
@@ -122,25 +161,29 @@ function App() {
           <div className="actions">
             <div className="close-btn" onClick={() => close()}>close</div>
           </div>
+
+          {displayToolTip()}
+          
         </div>
       )}
     </Popup>
   );
+
   // trade box modal 
-  const wowBox = (wowItems, packItems) => {
+  const gameBox = (gameItems, packItems) => {
     return(
-      <Popup trigger={<div id="wow-box-open"></div>} modal nested>
+      <Popup trigger={<div id="game-box-open"></div>} modal nested>
         {close => (
           <div className="modal">
             <div className="header"> MOVE ITEMS FROM GAME TO WALLET</div>
 
             <div className="trade-box-wrap">
 
-              <div className="wow-pack-box">
+              <div className="game-pack-box">
               <div className="pack-grid">
-                  {wowItems.map((i) => {
+                  {gameItems.map((i) => {
                     return(
-                      <div className="item-slot" key={"wow-slot-"+i}>
+                      <div className="item-slot" key={"game-slot-"+i}>
                       </div>
                     )
                   })}
@@ -153,17 +196,30 @@ function App() {
                 
               <div className="mobius-pack-box">
                 <div className="pack-grid">
-                  {packItems.map((i) => {
-                    return(
-                      <div className="item-slot" key={"item-slot-"+i}>
-                      </div>
-                    )
+
+                  {items.map((i) => {
+                    if(i.pic) {
+
+                      return(
+                        <div className="item-slot" key={"item-slot-"+i} data-tip={"item-slot-"+i}>
+                          <img src={i.pic} alt="" className="item-img" />
+                        </div>
+                      )
+
+                    }else{
+                      return(
+                        <div className="item-slot" key={"item-slot-"+i}>
+                          <img src={emptyItemPic} alt="" className="item-img" />
+                        </div>
+                      )
+                    }
                   })}
+
                   </div>
               </div>
             
             </div>
-            
+            {displayToolTip()}
           </div>
         )}
       </Popup>
@@ -192,7 +248,8 @@ function App() {
       
       {mobiusBox(items)}
       
-      {wowBox(wowItems, items)}
+      {gameBox(gameItems, items)}
+
     </div>
   );
 }
