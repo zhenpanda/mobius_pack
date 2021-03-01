@@ -40,11 +40,18 @@
         z-index: 50;    
 
         .dotted-box {
-            background: black;
-            width: 0.75em;
-            height: 0.75em;
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-left: 10px solid #1d80ad;
+            border-bottom: 5px solid transparent;
             margin-left: 2em;
             margin-top: -0.5em;    
+        }
+        .game-title {
+            width: 10em;
+            height: 1em;
+            margin-left: 3em;
         }
     }
 
@@ -60,19 +67,33 @@
         display: inline-block;
         border: 0.01em solid red;
     }
+    .circle-3-color {
+        background: #fd9047;
+        border-radius: 50%;
+        display: inline-block;
+        border: 0.01em solid red;
+    }
+    .circle-4-color {
+        background: #2190da;
+        display: inline-block;
+        border: 0.01em solid #252525;
+    }
+    .circle-5-color {
+        background: #ffffff;
+        display: inline-block;
+        border: 0.01em solid #489187;
+    }
 
     #content{
         position:relative;
     }
-    #line{
+
+    .line-style-one {
         position:absolute;
         width: 0.1em;
         z-index: 10;
-        // background-color: grey;
-
         background: linear-gradient(130deg, red, #ffe260);
         background-size: 200% 200%;
-    
         -webkit-animation: Animation 12s ease infinite;
         -moz-animation: Animation 12s ease infinite;
         animation: Animation 12s ease infinite;
@@ -171,32 +192,33 @@ border: 1px solid #cfcece;
     padding: 1em;
     padding-top: 1.5em;
 
-    .items-ref-box {
-        padding-top: 2em;
-        margin: auto;
-        display: block;
-    }
-    .pack-grid {
-        margin-left: auto;
-        margin-right: auto;
-        width: 30em;
-        
-        .item-slot {
-            display: inline-block;
-            height: 8em;
-            width: 8em;
-            border: 0.2em dashed grey;
-            border-radius: 0.75em;
-            background: #f3f3f3;
-            margin: 0.5em;
-        }
-        .item-img {
-            height: 98%;
-            width: 98%;
-            padding: 0.1em;
-        }
-    }
 }
+
+.items-ref-box {
+    padding-top: 2em;
+    margin: auto;
+    display: block;
+}
+.pack-grid {
+    margin-left: auto;
+    margin-right: auto;
+    width: 30em;
+}        
+.item-slot {
+    display: inline-block;
+    height: 8em;
+    width: 8em;
+    border: 0.2em dashed grey;
+    border-radius: 0.75em;
+    background: #f3f3f3;
+    margin: 0.5em;
+}
+.item-img {
+    height: 98%;
+    width: 98%;
+    padding: 0.1em;
+}
+
 // hover box
 .item-description-box {
     width: 20em;
